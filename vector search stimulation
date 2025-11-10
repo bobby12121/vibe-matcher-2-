@@ -1,0 +1,7 @@
+# --- Compute cosine similarity ---
+df["similarity"] = df["embedding"].apply(lambda x: cosine_similarity([x], [query_embedding])[0][0])
+
+# --- Sort top-3 matches ---
+top3 = df.sort_values("similarity", ascending=False).head(3)
+print("🔍 Top 3 Matches for:", query)
+display(top3[["name", "desc", "vibes", "similarity"]])
