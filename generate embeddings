@@ -1,0 +1,6 @@
+# --- Compute embeddings for product descriptions ---
+df["embedding"] = df["desc"].apply(lambda x: get_embedding(x))
+
+# --- Example vibe query ---
+query = "energetic urban chic"
+query_embedding = get_embedding(query)
