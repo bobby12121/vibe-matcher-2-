@@ -1,0 +1,22 @@
+import timeit
+
+queries = ["energetic urban chic", "cozy boho comfort", "retro casual look"]
+results = []
+
+for q in queries:
+    start = timeit.default_timer()
+    q_emb = get_embedding(q)
+    sims = cosine_similarity(np.stack(df["embedding"]), [q_emb]).flatten()
+    top_score = np.max(sims)
+    latency = timeit.default_timer() - start
+    results.append({"query": q, "top_score": top_score, "latency": latency})
+
+results_df = pd.DataFrame(results)
+print(results_df)
+
+# --- Plot latency ---
+plt.bar(results_df["query"], results_df["latency"])
+plt.title("Embedding + Similarity Latency per Query")
+plt.ylabel("Seconds")
+plt.xticks(rotation=20)
+plt.show()
